@@ -24,3 +24,7 @@ export interface TaskResponse extends Response<Task[] | Task> {
 export interface AccountResponse extends Response<Account[] | Account> {
     data?: Account[] | Account;
 }
+
+export interface AuthenticationResponse extends Response<{token: string}> {
+    data?: {token: string};
+}

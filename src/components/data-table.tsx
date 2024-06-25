@@ -69,15 +69,15 @@ export function DataTable<TData, TValue>({
 
     return (
         <div className="w-full flex flex-col gap-4">
-            <div className="flex flex-row justify-between gap-2">
-                <div className="flex flex-row flex-1">{filterBar(table)}</div>
+            <div className="flex flex-col md:flex-row justify-between gap-2">
+                <div className="flex flex-row flex-1 gap-2">{filterBar(table)}</div>
                 <div>{addButton}</div>
             </div>
             <div className="rounded-md border">
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
-                            <TableRow key={headerGroup.id}>
+                            <TableRow key={headerGroup.id} className="[&_th:first-child]:rounded-tl-md [&_th:last-child]:rounded-tr-md">
                                 {headerGroup.headers.map((header) => {
                                     return (
                                         <TableHead key={header.id}>
@@ -102,6 +102,7 @@ export function DataTable<TData, TValue>({
                                     data-state={
                                         row.getIsSelected() && "selected"
                                     }
+                                    className="[&_td:first-child]:rounded-bl-md [&_td:last-child]:rounded-br-md"
                                 >
                                     {row.getVisibleCells().map((cell) => (
                                         <TableCell key={cell.id}>

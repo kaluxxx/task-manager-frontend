@@ -6,11 +6,10 @@ import {Response} from "@/models/types/response.ts";
 const updateOptions = (options: RequestInit): RequestInit => {
     const updatedOptions = {...options};
     const token = localStorage.getItem("token");
-    const {value} = JSON.parse(token ?? "{}") as { value: string };
     if (token) {
         updatedOptions.headers = {
             ...updatedOptions.headers,
-            Authorization: `Bearer ${value}`,
+            Authorization: `Bearer ${token}`,
         };
     }
     return updatedOptions;
@@ -28,17 +27,17 @@ const sendRequest = async <T>(
         headers: {},
     };
 
-    if (body) {
-        if (body instanceof FormData) {
-            options.body = body;
-        } else {
-            options.headers = {
-                ...options.headers,
-                "Content-Type": "application/json",
-            };
-            options.body = JSON.stringify(body);
-        }
+
+    if (body instanceof FormData) {
+        options.body = body;
+    } else {
+        options.headers = {
+            ...options.headers,
+            "Content-Type": "application/json",
+        };
+        options.body = body ? JSON.stringify(body) : undefined;
     }
+
 
     const response = await fetch(url, updateOptions(options));
 

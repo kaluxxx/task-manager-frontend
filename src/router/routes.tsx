@@ -4,42 +4,57 @@ import AccountUpdatePage from "@/pages/account/account-update-page.tsx";
 import TaskAddPage from "@/pages/task/task-add-page.tsx";
 import TaskListPage from "@/pages/task/task-list-page.tsx";
 import TaskUpdatePage from "@/pages/task/task-update-page.tsx";
+import RegisterPage from "@/pages/authentication/register-page.tsx";
+import PrivateRoute from "@/router/private-route.tsx";
+import LoginPage from "@/pages/authentication/login-page.tsx";
 
 export const routes = [
     {
         path: "/",
-        element: <TaskListPage />,
+        element: <PrivateRoute element={<TaskListPage/>}/>,
     },
     {
         path: "/tasks",
-        element: <TaskListPage />,
+        element: <PrivateRoute element={<TaskListPage/>}/>,
     },
     {
         path: "/tasks/new",
-        element: <TaskAddPage />,
+        element: <PrivateRoute element={<TaskAddPage/>}/>,
     },
     {
         path: "/tasks/:id",
-        element: <TaskListPage />,
+        element:  <PrivateRoute element={<TaskListPage/>}/>,
     },
     {
         path: "/tasks/:id/update",
-        element: <TaskUpdatePage />,
+        element:  <PrivateRoute element={<TaskUpdatePage/>}/>,
     },
     {
         path: "/tasks/:id/delete",
-        element: <TaskListPage />,
+        element:  <PrivateRoute element={<TaskListPage/>}/>,
     },
     {
         path: "/accounts",
-        element: <AccountListPage />,
+        element:  <PrivateRoute element={<AccountListPage/>}/>,
     },
     {
         path: "/accounts/new",
-        element: <AccountAddPage />,
+        element:  <PrivateRoute element={<AccountAddPage/>}/>,
     },
     {
         path: "/accounts/:id/update",
-        element: <AccountUpdatePage />,
+        element: <PrivateRoute element={<AccountUpdatePage/>}/>,
     },
+    {
+        path: "register",
+        element: <RegisterPage/>,
+    },
+    {
+        path: "login",
+        element: <LoginPage/>,
+    },
+    {
+        path: "*",
+        element: <PrivateRoute element={<TaskListPage/>}/>,
+    }
 ];

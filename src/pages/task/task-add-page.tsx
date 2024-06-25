@@ -43,10 +43,8 @@ export default function TaskAddPage() {
     });
 
     useEffect(() => {
-        if (accounts.length === 0) {
-            void dispatch(getAccounts());
-        }
-    }, [accounts, dispatch]);
+        void dispatch(getAccounts());
+    }, [dispatch]);
 
     const createNewTask = async (values: CreateTaskDTO) => {
         const createTaskResult = await dispatch(createTask(values));
@@ -101,34 +99,49 @@ export default function TaskAddPage() {
         <div className="p-8 bg-black min-h-screen text-gray-400">
             <div className="container flex flex-col gap-8">
                 <Navigation/>
-                <div className="flex flex-row justify-between items-center">
-                    <div className="flex flex-col justify-center">
-                        <h1 className="text-3xl text-white font-bold">
-                            Add a new task !
-                        </h1>
-                        <p>Fill in the form below to add a new task.</p>
+                {accounts.length === 0 &&
+                    <div className="flex flex-col items-center justify-center gap-4">
+                        <p className="text-lg">No accounts found</p>
+                        <p className="text-sm">
+                            You need to add an account before creating a task.
+                        </p>
+                        <div>
+                            <Button asChild={true} className="border border-white">
+                                <Link to="/accounts">Add an account</Link>
+                            </Button>
+                        </div>
                     </div>
-                    <div>
-                        <Button asChild={true} className="border border-white">
-                            <Link to="/tasks">Back to tasks</Link>
-                        </Button>
-                    </div>
-                </div>
-                <Separator/>
-                <div className="">
-                    {accounts.length > 0 &&
-                        <TaskForm
-                            form={form}
-                            onSubmit={onSubmit}
-                            fields={fields}
-                            append={append}
-                            remove={remove}
-                            accounts={accounts}
-                            accountValues={accountValues}
-                            setAccountValues={setAccountValues}
-                        />
-                    }
-                </div>
+                }
+                {accounts.length > 0 &&
+                    <>
+                        <div className="flex flex-row justify-between items-center">
+                            <div className="flex flex-col justify-center">
+                                <h1 className="text-3xl text-white font-bold">
+                                    Add a new task !
+                                </h1>
+                                <p>Fill in the form below to add a new task.</p>
+                            </div>
+                            <div>
+                                <Button asChild={true} className="border border-white">
+                                    <Link to="/tasks">Back to tasks</Link>
+                                </Button>
+                            </div>
+                        </div>
+                        <Separator/>
+                        <div className="">
+                            <TaskForm
+                                form={form}
+                                onSubmit={onSubmit}
+                                fields={fields}
+                                append={append}
+                                remove={remove}
+                                accounts={accounts}
+                                accountValues={accountValues}
+                                setAccountValues={setAccountValues}
+                            />
+                        </div>
+                    </>
+                }
             </div>
         </div>
     );

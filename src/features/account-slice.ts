@@ -105,13 +105,6 @@ export const accountSlice = createSlice({
                 state.accounts = action.payload.data as Account[];
             },
         );
-        builder.addCase(getAccounts.rejected, (state, action) => {
-            const {message, code} = JSON.parse(action.error.message!) as {
-                message: string;
-                code: number;
-            };
-            state.error = new HttpRequestError(message, code);
-        });
         builder.addCase(getAccount.pending, (state) => {
             state.loading.account = true;
         });
@@ -122,13 +115,6 @@ export const accountSlice = createSlice({
                 state.account = action.payload.data as Account;
             },
         );
-        builder.addCase(getAccount.rejected, (state, action) => {
-            const {message, code} = JSON.parse(action.error.message!) as {
-                message: string;
-                code: number;
-            };
-            state.error = new HttpRequestError(message, code);
-        });
         builder.addCase(createAccount.pending, (state) => {
             state.loading.account = true;
         });
@@ -143,11 +129,7 @@ export const accountSlice = createSlice({
             },
         );
         builder.addCase(createAccount.rejected, (state, action) => {
-            const {message, code} = JSON.parse(action.error.message!) as {
-                message: string;
-                code: number;
-            };
-            state.error = new HttpRequestError(message, code);
+            state.error = new HttpRequestError(action.error.message!, 401);
         });
         builder.addCase(updateAccount.pending, (state) => {
             state.loading.account = true;
@@ -163,11 +145,7 @@ export const accountSlice = createSlice({
             },
         );
         builder.addCase(updateAccount.rejected, (state, action) => {
-            const {message, code} = JSON.parse(action.error.message!) as {
-                message: string;
-                code: number;
-            };
-            state.error = new HttpRequestError(message, code);
+            state.error = new HttpRequestError(action.error.message!, 401);
         });
         builder.addCase(
             disableAccount.fulfilled,
