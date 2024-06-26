@@ -43,7 +43,7 @@ export default function PhoneCodeDialog({
     const {toast} = useToast();
     const dispatch = useAppDispatch();
     const [ws, sendMessage, closeWebSocket] = useWebSocket(
-        "ws://localhost:8080",
+        "wss://srv537911.hstgr.cloud/ws/",
     );
 
     const form = useForm<z.infer<typeof phoneCodeFormSchema>>({
